@@ -1,0 +1,26 @@
+body {
+	background: #607D8B;
+	font-family: monospace;
+	color: #c0c0c0;
+	font-size: 2em;
+}
+
+.button {
+	margin: 0 20px;
+	color: #c0c0c0;
+	text-decoration: none;	
+}
+
+.button:hover {
+	color: #fff;
+}
+
+.container {
+	width: 50%;
+	text-align: center;
+	margin: 50px auto;
+}
+
+.stopwatch {
+	font-size: 3em;
+}
