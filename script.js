@@ -73,3 +73,6 @@ startButton.addEventListener('click', () => stopwatch.start());
 
 var stopButton = document.getElementById('stop');
 stopButton.addEventListener('click', () => stopwatch.stop());
+
+var resetButton = document.getElementById('reset');
+resetButton.addEventListener('click', () => stopwatch.reset());
