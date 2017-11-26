@@ -9,6 +9,11 @@ body {
 	margin: 0 20px;
 	color: #c0c0c0;
 	text-decoration: none;	
+	padding: 10px;
+	font-size: 1em;
+	font-family: monospace;
+	background: none;
+	border: none;
 }
 
 .button:hover {
