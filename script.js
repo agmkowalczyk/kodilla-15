@@ -1,29 +1,27 @@
 
 class Stopwatch extends React.Component {
 
-    constructor(display) {
-    	super();
+    constructor(props) {
+    	super(props);
     	this.state = {
     		running: false,
-    		display: display
+    		times: {
+	            minutes: 0,
+	            seconds: 0,
+	            miliseconds: 0
+	        }
     	};
-        this.reset();
-        this.print(this.times);
     }
 
     reset() {
-        this.times = {
-            minutes: 0,
-            seconds: 0,
-            miliseconds: 0
-        };    	
+        this.setState({
+        	times: {
+	            minutes: 0,
+	            seconds: 0,
+	            miliseconds: 0
+        	}
+        });    	
     }
-
-	print() {
-		this.format(this.times); 
-	}        
-
-
 
 	render() {
 		return (
@@ -39,7 +37,7 @@ class Stopwatch extends React.Component {
         		  	onClick={event => this.stop()}>Stop</button>
       		</nav>
       		<div id="stopwatch" className="stopwatch">
-      			{this.format(this.times)}
+      			{this.format(this.state.times)}
       		</div>
       		<ul className="results">
       		</ul>
@@ -64,25 +62,27 @@ class Stopwatch extends React.Component {
 	step() {
 	    if (!this.state.running) return;
 	    this.calculate();
-	    this.print();
 	}
 
 	calculate() {
-	    this.times.miliseconds += 1;
-	    if (this.times.miliseconds >= 100) {
-	        this.times.seconds += 1;
-	        this.times.miliseconds = 0;
-	    }
-	    if (this.times.seconds >= 60) {
-	        this.times.minutes += 1;
-	        this.times.seconds = 0;
-	    }
+		this.setState(prevState => {
+		    prevState.times.miliseconds += 1;
+		    if (prevState.times.miliseconds >= 100) {
+		        prevState.times.seconds += 1;
+		        prevState.times.miliseconds = 0;
+		    }
+		    if (prevState.times.seconds >= 60) {
+		        prevState.times.minutes += 1;
+		        prevState.times.seconds = 0;
+		    }
+		    return prevState;
+		});
 	}	
 
 	stop() {
 		this.setState ({
 	    	running: false
-	    })
+	    });
 	    clearInterval(this.watch);
 	}
 }

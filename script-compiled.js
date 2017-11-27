@@ -11,33 +11,32 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Stopwatch = function (_React$Component) {
 	_inherits(Stopwatch, _React$Component);
 
-	function Stopwatch(display) {
+	function Stopwatch(props) {
 		_classCallCheck(this, Stopwatch);
 
-		var _this = _possibleConstructorReturn(this, (Stopwatch.__proto__ || Object.getPrototypeOf(Stopwatch)).call(this));
+		var _this = _possibleConstructorReturn(this, (Stopwatch.__proto__ || Object.getPrototypeOf(Stopwatch)).call(this, props));
 
 		_this.state = {
 			running: false,
-			display: display
+			times: {
+				minutes: 0,
+				seconds: 0,
+				miliseconds: 0
+			}
 		};
-		_this.reset();
-		_this.print(_this.times);
 		return _this;
 	}
 
 	_createClass(Stopwatch, [{
 		key: "reset",
 		value: function reset() {
-			this.times = {
-				minutes: 0,
-				seconds: 0,
-				miliseconds: 0
-			};
-		}
-	}, {
-		key: "print",
-		value: function print() {
-			this.format(this.times);
+			this.setState({
+				times: {
+					minutes: 0,
+					seconds: 0,
+					miliseconds: 0
+				}
+			});
 		}
 	}, {
 		key: "render",
@@ -74,7 +73,7 @@ var Stopwatch = function (_React$Component) {
 				React.createElement(
 					"div",
 					{ id: "stopwatch", className: "stopwatch" },
-					this.format(this.times)
+					this.format(this.state.times)
 				),
 				React.createElement("ul", { className: "results" })
 			);
@@ -103,20 +102,22 @@ var Stopwatch = function (_React$Component) {
 		value: function step() {
 			if (!this.state.running) return;
 			this.calculate();
-			this.print();
 		}
 	}, {
 		key: "calculate",
 		value: function calculate() {
-			this.times.miliseconds += 1;
-			if (this.times.miliseconds >= 100) {
-				this.times.seconds += 1;
-				this.times.miliseconds = 0;
-			}
-			if (this.times.seconds >= 60) {
-				this.times.minutes += 1;
-				this.times.seconds = 0;
-			}
+			this.setState(function (prevState) {
+				prevState.times.miliseconds += 1;
+				if (prevState.times.miliseconds >= 100) {
+					prevState.times.seconds += 1;
+					prevState.times.miliseconds = 0;
+				}
+				if (prevState.times.seconds >= 60) {
+					prevState.times.minutes += 1;
+					prevState.times.seconds = 0;
+				}
+				return prevState;
+			});
 		}
 	}, {
 		key: "stop",
